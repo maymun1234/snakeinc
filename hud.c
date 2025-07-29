@@ -30,7 +30,38 @@ unsigned char font_bitmap[512 * 512];
 stbtt_bakedchar cdata[96];                // ASCII 32..126
 GLuint fontTex;
 
+
+
+
+
+
+//aşağıdaki metodda txt dosyası olacak her saniye bir satır. ve metod çağrıldıdddğında saıtrıın souna aaa yazacak
+ULONGLONG beginduration = 0;
+
+
+void saveStats(int startstop) {
+   //düz debug verince sorun yok ama zamanlayıcı olunca fps düşüyor:()
+
+    if (startstop == 0) {
+        
+        beginduration = GetTickCount64();
+        fprintf(stdout, "Baslangic zamani\n");
+    } else if (startstop != 0) {
+        
+        // Bitirme zamanı ve süre hesaplanır
+        ULONGLONG duration = GetTickCount64() - beginduration;
+    // fprintf(stdout, " %llu ms\n", GetTickCount64());
+        //daurationu konsola yazdır dosyaya değii lkosnola
+      fprintf(stdout, "%d Sure: %llu ms\n", startstop, duration);
+    } 
+
+
+}
+
+
 void initFont() {
+     
+     
     FILE* f = fopen("source/resources/Roboto-Regular.ttf", "rb");
     if (!f) {
         printf("[HATA] Font dosyası açılamadı! Yol: resources/Roboto-Regular.ttf\n");
@@ -39,8 +70,9 @@ void initFont() {
     size_t read = fread(ttf_buffer, 1, 1 << 20, f);
     fclose(f);
     //printf("[OK] Font dosyası başarıyla yüklendi (%zu bayt).\n", read);
-
+    
     int bakeResult = stbtt_BakeFontBitmap(ttf_buffer, 0, 32.0, font_bitmap, 512, 512, 32, 96, cdata);
+    
     if (bakeResult <= 0) {
         printf("[HATA] Font bake işlemi başarısız oldu!\n");
         exit(1);
@@ -109,12 +141,21 @@ int fpsfark = 0;
 int currentscond;
 
 void drawhud(int score1, int arr[]) {
-    initFont(); 
+   saveStats(0); // Oyun başladığında istatistikleri kaydet
+   saveStats(1);
+    initFont();
+    saveStats(1); // Oyun başladığında istatistikleri kaydet
+
     glMatrixMode(GL_PROJECTION);
+
 glLoadIdentity();
+ 
 gluOrtho2D(0, SCREENWIDTH, 0, SCREENHEIGHT);  // Ekran koordinatları
+
 glMatrixMode(GL_MODELVIEW);
+
 glLoadIdentity();
+
     char scoreText[32];
     snprintf(scoreText, sizeof(scoreText), "Score: %d", score1);
     if(score1 > 0){
@@ -124,7 +165,7 @@ glLoadIdentity();
     int boxHeight = 40;
     int boxX = SCREENWIDTH - boxWidth - 10; // sağdan 10 piksel içeri
     int boxY = SCREENHEIGHT - boxHeight - 10; // yukarıdan 10 piksel içeri
-
+   
     glColor3ub(255, 255, 255); // Beyaz renk
     glBegin(GL_QUADS);
         glVertex2i(boxX, boxY);
@@ -139,12 +180,11 @@ glLoadIdentity();
     char str[12];
     sprintf(str, "/%d", foodtypescore[i]);
     drawString(posX, SCREENHEIGHT -40, str, 0.263f, 0.439f, 0.341f, 1.0f);
-
+    
+ 
 }
 
-
-
-// 1 saniye önceki jfjfjf değerini kaydet
+saveStats(1); // Oyun başladığında istatistikleri kaydet
 
 
 
@@ -157,25 +197,19 @@ glLoadIdentity();
     GetSystemTime(&currentTime); // UTC zaman verir
 
 
-    
-   
 
         if(currentTime.wSecond != currentscond){
             fpsfark = jfjfjf; // FPS farkını kaydet
             jfjfjf = 0; // Saniye değiştiğinde jfjfjf sıfırlanır
           
         }
-        
+       
         currentscond = currentTime.wSecond;
         jfjfjf++;
-        
-      
-    
-    
 
     
     drawString(10, SCREENHEIGHT - 30, scoreText, 0.263f, 0.439f, 0.341f, 1.0f);
-
+saveStats(2); // Oyun başladığında istatistikleri kaydet
 }
 
 
@@ -193,7 +227,7 @@ void youlosttext(int score1) {
     
     glutPostRedisplay();
     glColor3ub(255, 0, 0); // Kırmızı
-      printf("[DEBUG] Skor değeri: %d\n", gameoverscore);
+    //  printf("[DEBUG] Skor değeri: %d\n", gameoverscore);
 
     //fpriintf(stdout, "[INFO] Oyun kaybedildi! Ekrana mesaj yazılıyor...\n");
     glClearColor(0.184f, 0.322f, 0.286f, 1.0f); // #2f5249ff

@@ -26,18 +26,14 @@ void automatedmovement(void);
 void automove(int val);
 void idleFunc();
 void linearscan();
-
-typedef enum {
-    LINEARSCAN,
-	BASICAUTOMATED,
-    USERINPUT,
-    // ... başka state'ler eklersen buraya
-} AutonomDirection;
+void mousescan(void);
 
 
 
 
-AutonomDirection currentdireciton = LINEARSCAN; // Başlangıç yönü
+
+
+
 
 int besttiletogo[2] = {1, 1};
 
@@ -58,8 +54,15 @@ void idleFunc() {
             case USERINPUT:
                 // Kullanıcı girişi bekleniyor, hiçbir şey yapma
                 break;
+            case MOUSEMOVE:
+            mousescan();
+                // Fare girişi bekleniyor, hiçbir şey yapma
+                break;
+            case ALLRANDOM:
+                break;
+                
         }
-
+         
         // --- Sabit hızla ileri gitmek isteniyorsa ---
         if (isspeed) {
             automove(0); // val parametresi zaten kullanılmıyor
@@ -91,8 +94,7 @@ void automatedTimer(int val) {
         automatedmovement();
     }
 
-    glutPostRedisplay();
-    glutTimerFunc(100, automatedTimer, 0); // 3 saniyede bir çalışsın
+    
 }
 
 void TimerFunction(int val){
@@ -119,7 +121,7 @@ void TimerFunction(int val){
 int moveid= 0;
 
 void automatedmovement(void) {
-    fprintf(stdout, "Automated movement started at: \n");
+  //  fprintf(stdout, "Automated movement started at: \n");
     if (currentState != STATE_GAMEUI) return;
 
     ULONGLONG currentTime = GetTickCount64();
@@ -354,3 +356,67 @@ void linearscan(void) {
          
 }
 
+
+void mousescan(void) {
+    POINT P;
+    ULONGLONG currentTime = GetTickCount64();
+
+    if (currentTime - lastMoveTime < 30) return;
+    lastMoveTime = currentTime;
+
+    glutMouseFunc(MouseFunction);
+    
+
+   
+    int mouseX = P.x;
+    int mouseY = P.y;
+fprintf(stdout, "Mouse Position: [%d, %d]\n", mouseX, mouseY);
+        // Tile koordinatlarını hesapla
+        int tileWidth = 40;
+        int tileHeight = 40;
+        int mouseTileX = mouseX / tileWidth;
+        int mouseTileY = mouseY / tileHeight;
+
+   //mouse nerdeyse hangi tilede olduğunu hesapla
+   
+
+    fprintf(stdout, "Mouse Tile: [%d, %d]\n", mouseTileX, mouseTileY);
+
+    // Eğer hedefe ulaşıldıysa fonksiyonu durdur
+    if (mouseTileX == cubbeupdatedpos[0] && mouseTileY == cubbeupdatedpos[1]) {
+        fprintf(stdout, "Hedefe ulaşıldı, tarama durduruldu.\n");
+        return;
+    }
+
+    // Hedefe doğru hareket et
+    if (mouseTileX > cubbeupdatedpos[0]) {
+        MoveCube(GLUT_KEY_RIGHT);
+    } else if (mouseTileX < cubbeupdatedpos[0]) {
+        MoveCube(GLUT_KEY_LEFT);
+    } else if (mouseTileY > cubbeupdatedpos[1]) {
+        MoveCube(GLUT_KEY_UP);
+    } else if (mouseTileY < cubbeupdatedpos[1]) {
+        MoveCube(GLUT_KEY_DOWN);
+    }
+}
+
+
+
+
+
+
+
+
+
+const char* getDirectionName(AutonomDirection dir) {
+    
+    switch (dir) {
+        case LINEARSCAN: return "LINEARSCAN";
+        case BASICAUTOMATED: return "BASICAUTOMATED";
+        case USERINPUT: return "USERINPUT";
+        case MOUSEMOVE: return "MOUSEMOVE";
+        default: return "UNKNOWN";
+    }
+
+  
+}

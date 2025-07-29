@@ -12,6 +12,7 @@
 #include "food.h" // Elma ile ilgili fonksiyonlar
 #include "automated.h"
 #include "gameplay.h"
+#include "stats.h"
 
 void updategameplay(void);
 void displaysnake(void);
@@ -112,6 +113,7 @@ void displaysnake(void) {
     // Yem yendiyse kontrol et
     if (cubeX == foodPosition[0] && cubeY == foodPosition[1]) {
         fprintf(stdout, "Food eaten at (%d, %d)\n", foodPosition[0], foodPosition[1]);
+        foodeatdurationms(1);
         printf("foodid = %d\n", foodid);
 
         score += foodid;
@@ -281,11 +283,14 @@ void paintsnakehead(void){
 }
 
 void restartgame(void) {
+    asavescoretotext(score);
     fprintf(stdout, "Game restarted!\n");
     fprintf(stdout, "jndsnkdnds");
     isautomated = false;
+    fprintf(stdout, "Game restarted!\n");
+   
     // Skor ve yılan durumu sıfırlanıyor
-    
+   
     score = 0;
     snakelenght = 1;
     isfoodexists = false;
@@ -330,6 +335,8 @@ void issnakecrashed(int x, int y) {
             if (lasttiles[i][0] == x && lasttiles[i][1] == y) {
                 fprintf(stdout, "Kendine çarptı: (%d, %d)\n", x, y);
                 currentState = STATE_GAMEOVER;
+                
+                
                 restartgame();
                 return;
             }
@@ -349,7 +356,9 @@ void issnakecrashed(int x, int y) {
 void checkWallCollision(void) {
     if (cubeTileX < 0 || cubeTileX >= tileCols || cubeTileY < 0 || cubeTileY >= tileRows) {
         fprintf(stdout, "Sınıra çarpıldı: (%d, %d)\n", cubeTileX, cubeTileY);
+
         currentState = STATE_GAMEOVER;
+
         restartgame();
     }
 }

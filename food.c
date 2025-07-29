@@ -94,11 +94,11 @@ typedef struct {
     int point;       // Skora etkisi
    
 } Food;
-
+#include "stats.h"
 
 void createfood(void) {
       loadFoodTextures();
-    
+    foodeatdurationms(0);
     foodPosition[0] = getRandomGridPositionX();
     foodPosition[1] = getRandomGridPositionY();
     if(foodPosition[0]%40 != 0 || foodPosition[1]%40 != 0 || isFoodOnSnake(foodPosition[0], foodPosition[1])) {

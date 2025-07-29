@@ -13,7 +13,7 @@
 
 #define SCREENWIDTH         800
 #define SCREENHEIGHT        480
-#define TIMER_INTERVAL      1000
+#define TIMER_INTERVAL      100
 
 
 #define KEY_ESC             27
@@ -136,7 +136,7 @@ void DisplayFunction(void){
     }
     //fpsi debug ver
   //zamanda saliseden daha hassas debug ver
- 
+    
 
     glFlush();
     glutSwapBuffers();
