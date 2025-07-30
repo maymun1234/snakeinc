@@ -157,7 +157,7 @@ void DrawGameoverscreen() {
     }
     
     
-isautomated= false;
+
      youlosttext(score);
     glClearColor(0.184f, 0.322f, 0.286f, 1.0f); // #2F5249
 

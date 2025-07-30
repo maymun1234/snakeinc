@@ -96,9 +96,33 @@ extern int foodPosition[2];  // foodPosition[0] = x, foodPosition[1] = y
 
 
 int lasttiles[90][2];
-
-void displaysnake(void) {
+bool iswallsexists = false; // Duvarların varlığı kontrolü
+int walls[20][2] = {
+    {0, 0}, 
    
+}; // Örnek duvar koordinatları
+
+void drawwalls(void) {
+    if (!iswallsexists)
+    {
+        return;
+    }
+    
+    glColor3ub(151, 176, 203); // Duvar rengi
+    for (int i = 0; i < 20; i++) {
+        int x = walls[i][0] * tileSize;
+        int y = walls[i][1] * tileSize;
+     //   fprintf(stdout, "Wall at tile: (%d, %d)\n", walls[i][0], walls[i][1]);
+        glBegin(GL_QUADS);
+            glVertex2i(x, y);
+            glVertex2i(x + tileSize, y);
+            glVertex2i(x + tileSize, y + tileSize);
+            glVertex2i(x, y + tileSize);
+        glEnd();
+    }
+}
+void displaysnake(void) {
+    drawwalls(); // Duvarları çiz
     glColor3ub(67, 112, 87);
     glBegin(GL_QUADS);
         glVertex2i(cubeX, cubeY);
@@ -331,7 +355,7 @@ void restartgame(void) {
 
 void issnakecrashed(int x, int y) {
     if (snakelenght > 1) {
-        for (int i = 1; i < snakelenght; i++) { // 0'dan değil 1'den başlıyoruz
+        for (int i = 1; i < 20; i++) { // 0'dan değil 1'den başlıyoruz
             if (lasttiles[i][0] == x && lasttiles[i][1] == y) {
                 fprintf(stdout, "Kendine çarptı: (%d, %d)\n", x, y);
                 currentState = STATE_GAMEOVER;
@@ -340,6 +364,18 @@ void issnakecrashed(int x, int y) {
                 restartgame();
                 return;
             }
+            else if(walls[i][0]==lasttiles[0][0] && walls[i][0]==lasttiles[1][0]){ //brada engele çarpmaya bakılacak.
+                 if (!iswallsexists)
+    {
+        return;
+    }
+                fprintf(stdout, "duvara çarptı: (%d, %d)\n", x, y);
+                currentState = STATE_GAMEOVER;
+                restartgame();
+                return;
+            }
+            
+
         }
     }
 }

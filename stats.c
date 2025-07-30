@@ -50,7 +50,6 @@ fprintf(stdout, "Score: %d\n", score11);
         }
     
   
- 
     
 }
 
@@ -69,7 +68,7 @@ void foodeatdurationms(int iseated){
         foodid++;
         ULONGLONG duration = GetTickCount64() - foodStartTime;
         levelTime += duration;  // Toplam süreye eklenir
-        fprintf(file, "foodeated %d = %llu ms\n", foodid, duration);
+        fprintf(file, "fd%d = %llu ms\n", foodid, duration);
         fclose(file);
     }
 }

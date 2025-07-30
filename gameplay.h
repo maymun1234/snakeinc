@@ -22,6 +22,7 @@ extern int tileCols;  // 800 / 40 = 20
 extern int tileRows; // 480 / 40 = 12
 extern int snakelenght;
 extern int lasttiles[90][2];
+extern int walls[20][2];
 extern int cubbbepos[2];
 bool ismovepossible(int x, int y) ;
  int cubeX, cubeY; // Piksel pozisyonları

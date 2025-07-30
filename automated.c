@@ -60,7 +60,7 @@ void idleFunc() {
                 break;
             case ALLRANDOM:
                 break;
-                
+
         }
          
         // --- Sabit hızla ileri gitmek isteniyorsa ---
@@ -364,41 +364,51 @@ void mousescan(void) {
     if (currentTime - lastMoveTime < 30) return;
     lastMoveTime = currentTime;
 
-    glutMouseFunc(MouseFunction);
-    
+    // Mouse pozisyonunu al
+    GetCursorPos(&P);
+    ScreenToClient(GetForegroundWindow(), &P); // Ekran koordinatlarını pencereye göre çevir bu satırıu çaldım
 
-   
+  
+    RECT clientRect;
+    GetClientRect(GetForegroundWindow(), &clientRect);
+    int windowHeight = clientRect.bottom;
+
     int mouseX = P.x;
-    int mouseY = P.y;
-fprintf(stdout, "Mouse Position: [%d, %d]\n", mouseX, mouseY);
-        // Tile koordinatlarını hesapla
-        int tileWidth = 40;
-        int tileHeight = 40;
-        int mouseTileX = mouseX / tileWidth;
-        int mouseTileY = mouseY / tileHeight;
+    int mouseY = windowHeight - P.y;  //
 
-   //mouse nerdeyse hangi tilede olduğunu hesapla
-   
+   // fprintf(stdout, "Mouse Position: [%d, %d]\n", mouseX, mouseY);
 
-    fprintf(stdout, "Mouse Tile: [%d, %d]\n", mouseTileX, mouseTileY);
+    // Tile koordinatlarını hesapla
+    int tileWidth = 40;
+    int tileHeight = 40;
+    int mouseTileX = mouseX / tileWidth;
+    int mouseTileY = mouseY / tileHeight;
+
+   // fprintf(stdout, "Mouse Tile: [%d, %d]\n", mouseTileX, mouseTileY);
 
     // Eğer hedefe ulaşıldıysa fonksiyonu durdur
     if (mouseTileX == cubbeupdatedpos[0] && mouseTileY == cubbeupdatedpos[1]) {
-        fprintf(stdout, "Hedefe ulaşıldı, tarama durduruldu.\n");
+     //   fprintf(stdout, "Hedefe ulaşıldı, tarama durduruldu.\n");
         return;
     }
-
+   
     // Hedefe doğru hareket et
     if (mouseTileX > cubbeupdatedpos[0]) {
+        Sleep(10);
         MoveCube(GLUT_KEY_RIGHT);
     } else if (mouseTileX < cubbeupdatedpos[0]) {
+        Sleep(10);
         MoveCube(GLUT_KEY_LEFT);
     } else if (mouseTileY > cubbeupdatedpos[1]) {
+        Sleep(10);
         MoveCube(GLUT_KEY_UP);
     } else if (mouseTileY < cubbeupdatedpos[1]) {
+        Sleep(10);
         MoveCube(GLUT_KEY_DOWN);
     }
 }
+
+
 
 
 

@@ -141,10 +141,10 @@ int fpsfark = 0;
 int currentscond;
 
 void drawhud(int score1, int arr[]) {
-   saveStats(0); // Oyun başladığında istatistikleri kaydet
-   saveStats(1);
+ //  saveStats(0); // Oyun başladığında istatistikleri kaydet
+ //  saveStats(1);
     initFont();
-    saveStats(1); // Oyun başladığında istatistikleri kaydet
+   // saveStats(1); // Oyun başladığında istatistikleri kaydet
 
     glMatrixMode(GL_PROJECTION);
 
@@ -184,7 +184,7 @@ glLoadIdentity();
  
 }
 
-saveStats(1); // Oyun başladığında istatistikleri kaydet
+//saveStats(1); // Oyun başladığında istatistikleri kaydet
 
 
 
@@ -209,7 +209,7 @@ saveStats(1); // Oyun başladığında istatistikleri kaydet
 
     
     drawString(10, SCREENHEIGHT - 30, scoreText, 0.263f, 0.439f, 0.341f, 1.0f);
-saveStats(2); // Oyun başladığında istatistikleri kaydet
+//saveStats(2); // Oyun başladığında istatistikleri kaydet
 }
 
 
@@ -217,13 +217,22 @@ void drawgameovertext(void){
     
 }
 
+//string arrayı oluştur
+char sozler[10];
+
+
 
 
 
 
 
 void youlosttext(int score1) {
-    
+    for(int i = 0; i < 10; i++) {
+      //  jjffj[i] = '\0'; // Diziyi sıfırla
+     //   jjffj[i] = 'a' + (rand() % 26); // Rastgele harf atama
+      //  printf("%c\n", jjffj[i]); // Diziyi yazdır
+    }
+    //drawString(SCREENWIDTH / 2 - 100, SCREENHEIGHT / 2 - 30, jjffj[1], 1.0f, 0.0f, 0.0f, 1.0f);
     
     glutPostRedisplay();
     glColor3ub(255, 0, 0); // Kırmızı
