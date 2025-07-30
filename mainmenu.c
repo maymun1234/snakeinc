@@ -45,6 +45,7 @@ stbi_set_flip_vertically_on_load(true);
         glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
         stbi_image_free(data);
     }
+    
 
     // overlay
   

@@ -16,7 +16,7 @@ typedef enum {
     // ... başka state'ler eklersen buraya
 } AutonomDirection;
 
-AutonomDirection currentdireciton = MOUSEMOVE; // Başlangıç yönü
+AutonomDirection currentdireciton = LINEARSCAN; // Başlangıç yönü
 const char* getDirectionName(AutonomDirection dir);
 
 #endif

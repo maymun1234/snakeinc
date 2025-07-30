@@ -93,14 +93,13 @@ int cubeSize = 40;  // Aynı tile boyutu
  int cubeX, cubeY; // Piksel pozisyonları
 extern int foodPosition[2];  // foodPosition[0] = x, foodPosition[1] = y
 
-
-
 int lasttiles[90][2];
 bool iswallsexists = false; // Duvarların varlığı kontrolü
 int walls[20][2] = {
-    {0, 0}, 
+    {0, 0},{0,5}, 
    
 }; // Örnek duvar koordinatları
+
 
 void drawwalls(void) {
     if (!iswallsexists)
@@ -248,12 +247,23 @@ void createsnake(void) {
 
 
 
+char djjdjd[5]={
+    'A', 'B', 'C', 'D', 'E'
+}; // Elma türleri için örnek karakterler
+
+int burcuuuuu;
+
+ char mrwkmfkrkm[] ="kmdsdvskmsmklv";
 
 
 //başlatıcı
 void startgame(void) {
     drawfood(); // Elmayı çiz
     fprintf(stdout, "Game started!\n");
+    for(int i=0; i<4; i++){
+      fprintf(stdout, "%p\n", &djjdjd[i]);
+    }
+   fprintf(stdout, "%p\n", &score);
    
     createsnake(); // Yılanı oluştur
     score = 0; // Skoru sıfırla
@@ -364,12 +374,12 @@ void issnakecrashed(int x, int y) {
                 restartgame();
                 return;
             }
-            else if(walls[i][0]==lasttiles[0][0] && walls[i][0]==lasttiles[1][0]){ //brada engele çarpmaya bakılacak.
+            else if(walls[i][0]==lasttiles[0][i] && walls[i][1]==lasttiles[i][1]){ //brada engele çarpmaya bakılacak.
                  if (!iswallsexists)
-    {
-        return;
-    }
-                fprintf(stdout, "duvara çarptı: (%d, %d)\n", x, y);
+                    {
+                        return;
+                    }
+                fprintf(stdout, "duvara çarptı: (%d, %d)\n", walls[i][0], walls[i][0]);
                 currentState = STATE_GAMEOVER;
                 restartgame();
                 return;
