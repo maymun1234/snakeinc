@@ -140,6 +140,8 @@ void displaysnake(void) {
         printf("foodid = %d\n", foodid);
 
         score += foodid;
+        printf("%lx\n", (unsigned long)&score);  // Adres: küçük harfli hex, 0x yok
+
         foodtypescore[foodid-1] ++;
         createfood();
         

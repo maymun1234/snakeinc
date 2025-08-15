@@ -25,7 +25,7 @@ void asavescoretotext( int score11) {
     // Dosya yolu ve adıfchcfhcf
     // Dosya açma işlemi
 fprintf(stdout, "Score: %d\n", score11);
-    FILE* file = fopen("source/resources/scoretab.txt", "a"); 
+    FILE* file = fopen("source/resources/scoretab.brc", "a"); 
     fprintf(stdout, "Score: %d\n\n", score11);
     //dosyanın son satırı foodeat ilebaşlıoyrsa o saatırı sil
     //beceremedim
@@ -60,7 +60,7 @@ void foodeatdurationms(int iseated){
         foodStartTime = GetTickCount64();  // Başlangıç zamanı saklanır
         
     } else {
-        FILE* file = fopen("source/resources/scoretab.txt", "a"); 
+        FILE* file = fopen("source/resources/scoretab.brc", "a"); 
         if (file == NULL) {
             fprintf(stderr, "Dosya açılamadı!\n");
             return;

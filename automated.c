@@ -13,7 +13,7 @@
 
 #include "food.h" // Elma ile ilgili fonksiyonlar
 //tick kullanılıyor zaman için
-
+int linearspeed= 9;
 int TimerCounter;
 int Minutes, Seconds;
 int Color;
@@ -276,29 +276,34 @@ Direction linearscanvector;
 Direction linearscanvector2;
 
 
+
+
+
+
+
 void linearscan(void) {
     ULONGLONG currentTime = GetTickCount64();
 
-    if (currentTime - lastMoveTime < 30) return;
+    if (currentTime - lastMoveTime < linearspeed) return;
     lastMoveTime = currentTime;
-    fprintf(stdout, "Lineer tarama yönü: %s\n", 
-        (linearscanvector == UP) ? "UP" : 
-        (linearscanvector == DOWN) ? "DOWN" : 
-        (linearscanvector == LEFT) ? "LEFT" : 
-        (linearscanvector == RIGHT) ? "RIGHT" : "UNKNOWN");
+    //fprintf(stdout, "Lineer tarama yönü: %s\n", 
+      //  (linearscanvector == UP) ? "UP" : 
+        //(linearscanvector == DOWN) ? "DOWN" : 
+        //(linearscanvector == LEFT) ? "LEFT" : 
+       // (linearscanvector == RIGHT) ? "RIGHT" : "UNKNOWN");
     // Eğer hedefe ulaşıldıysa fonksiyonu durdur
 
 
 
     if (cubbbepos[0]/40 == 0 && cubbbepos[1]/40 == 11) {
-        fprintf(stdout, "Hedefe ulaşıldı, tarama durduruldu.\n");
+   //     fprintf(stdout, "Hedefe ulaşıldı, tarama durduruldu.\n");
         MoveCube(GLUT_KEY_RIGHT); // Hedefe ulaşıldığında sola dön
         linearscanvector = DOWN; // Tarama yönünü yukarı olarak ayarla
         linearscanvector2 = RIGHT; // İkinci tarama yönünü aşağı olarak ayarla
        
     }
     if (cubbbepos[0]/40 == 19 && cubbbepos[1]/40 == 0) {
-        fprintf(stdout, "Hedefe ulaşıldı, tarama durduruldu.\n");
+   //     fprintf(stdout, "Hedefe ulaşıldı, tarama durduruldu.\n");
         MoveCube(GLUT_KEY_LEFT); // Hedefe ulaşıldığında sola dön
         linearscanvector = UP; // Tarama yönünü yukarı olarak ayarla
         linearscanvector2 = LEFT; // İkinci tarama yönünü aşağı olarak ayarla

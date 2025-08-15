@@ -21,7 +21,7 @@ typedef enum {
 
  #define SETDIRECTION LINEARSCAN
 
-AutonomDirection currentdireciton = MOUSEMOVE;
+AutonomDirection currentdireciton = SETDIRECTION; // Başlangıç yönü
 const char* getDirectionName(AutonomDirection dir);
 
 #endif

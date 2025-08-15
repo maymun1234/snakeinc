@@ -12,6 +12,7 @@
 #include <time.h>
 #define STB_TRUETYPE_IMPLEMENTATION
 #include "stb_truetype.h"
+#include "save.h"
 
 #include <string.h> // strlen için
 
